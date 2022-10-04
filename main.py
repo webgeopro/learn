@@ -1,16 +1,40 @@
-# This is a sample Python script.
+import requests
+import json
+from flask import Flask, render_template as tpl
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+def get_valutes_list():
+    url = 'https://www.cbr-xml-daily.ru/daily_json.js'
+    response = requests.get(url)
+    data = json.loads(response.text)
+    valutes = list(data['Valute'].values())
+    return valutes
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+app = Flask(__name__, template_folder='./resources/views')
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+def create_html(valutes):
+    text = '<table>'
+    text += '<tr>'
+    for _ in valutes[0]:
+        text += f'<th><th>'
+    text += '</tr>'
+    for valute in valutes:
+        text += '<tr>'
+        for v in valute.values():
+            text += f'<td>{v}</td>'
+        text += '</tr>'
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    text += '</table>'
+    return text
+
+
+@app.route("/")
+def index():
+    valutes = get_valutes_list()
+    valutes_html = create_html(valutes)
+    return tpl('index.html', html=valutes_html)
+
+
+if __name__ == "__main__":
+    app.run()
