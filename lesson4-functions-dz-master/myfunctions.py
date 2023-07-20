@@ -55,22 +55,8 @@ def hello_world():
     ##########
     :return: None
     """
-    print('''
-**********
+    print(simple_separator(), '', 'Hello World!', '', separator('#', 10), sep="\n")
 
-Hello World!
-
-##########
-''')
-
-
-'''
-**********
-
-Hello World!
-
-##########
-'''
 hello_world()
 
 

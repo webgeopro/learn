@@ -5,16 +5,17 @@
 Можно использовать свой вариант программы из предыдущего дз, мой вариант реализован ниже
 Задание: переписать код используя как минимум 1 функцию
 """
-def question_answer(question, answer):
-    val = input(question + ': ')
-    while val != answer:
+
+def quiz(q, a:int):
+    val = int(input(q + ': '))
+    while val != a:
         print("Не верно")
-        val = input(question + ': ')
+        val = int(input(q + ': '))
     
     return True    
 
 
-question_answer('Ввведите год рождения А.С.Пушкина', '1799')
-question_answer('Ввведите день рождения Пушкина', '6')
+quiz('Введите год рождения А.С.Пушкина', 1799)
+quiz('Введите день рождения Пушкина', 6)
 
-print('Верно')
+print('Верно!')
